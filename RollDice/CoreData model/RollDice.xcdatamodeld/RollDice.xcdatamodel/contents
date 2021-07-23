@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="18154" systemVersion="20F71" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Die" representedClassName="Die" syncable="YES">
+        <attribute name="amountOfSides" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="rolls" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Roll" inverseName="die" inverseEntity="Roll"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="amountOfSides"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="Roll" representedClassName="Roll" syncable="YES">
+        <attribute name="amountOfDice" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="result" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="time" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="die" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Die" inverseName="rolls" inverseEntity="Die"/>
+    </entity>
+    <elements>
+        <element name="Die" positionX="-63" positionY="9" width="128" height="59"/>
+        <element name="Roll" positionX="-63" positionY="-18" width="128" height="104"/>
+    </elements>
+</model>
