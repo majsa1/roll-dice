@@ -9,6 +9,7 @@ import SwiftUI
 
 struct Counter: View {
     @Environment(\.managedObjectContext) private var moc
+    @Environment(\.colorScheme) var colorScheme
     
     let die: Int
     let dice: [[Int]] 
@@ -67,9 +68,11 @@ struct Counter: View {
                         ForEach(indexRange[number], id: \.self) { index in
                             Text("\(dice[number][index])")
                                 .font(.title)
+                                .foregroundColor(.black)
                         }
                     }
                     .frame(width: 85, height: 85, alignment: .center)
+                    .background(backgroundColor)
                     .colorButton()
                     .alert(isPresented: $showingResult) {
                         Alert(title: Text("You rolled \(formattedResults)"), dismissButton: .default(Text("Roll again")))
@@ -78,6 +81,10 @@ struct Counter: View {
                 }
             }
         }
+    }
+    
+    var backgroundColor: Color {
+        colorScheme == .dark ? Color.gray : Color.init(#colorLiteral(red: 0.9999960065, green: 1, blue: 1, alpha: 1))
     }
     
     func wind() {
@@ -172,5 +179,9 @@ struct Counter_Previews: PreviewProvider {
         let fourSided: [Int] = (0..<100).map { _ in Int.random(in: 1...6)}
         
         Counter(die: 4, dice: [fourSided, fourSided], amountOfDice: 2)
+            .preferredColorScheme(.light)
+        
+        Counter(die: 4, dice: [fourSided, fourSided], amountOfDice: 2)
+            .preferredColorScheme(.dark)
     }
 }

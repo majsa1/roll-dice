@@ -15,12 +15,15 @@ struct ResultsView: View {
         NSSortDescriptor(keyPath: \Die.amountOfSides, ascending: true)
     ]) var dice: FetchedResults<Die>
     
+    @State private var showingWarning = false
+    @State private var dieToClear: Die?
+    
     var body: some View {
         
         NavigationView {
             List {
-                ForEach(dice, id: \.self) { die in
-                    Section(header: Text("Die: \(die.amountOfSides)")) {
+                ForEach(dice, id: \.amountOfSides) { die in
+                    Section(header: getHeader(for: die)) {
                         ForEach(die.formattedRolls, id: \.id) { roll in
                             HStack {
                                 Text("Result: \(roll.result)")
@@ -28,9 +31,9 @@ struct ResultsView: View {
                                 Text("Amount of dice: \(roll.amountOfDice)")
                             }
                         }
-                        .onDelete(perform: { offsets in
+                        .onDelete { offsets in
                             delete(at: offsets, from: die)
-                        })
+                        }
                     }
                 }
             }
@@ -38,6 +41,27 @@ struct ResultsView: View {
             .navigationBarTitle("Results")
             .toolbar {
                EditButton()
+            }
+            .alert(isPresented: $showingWarning) {
+                Alert(
+                    title: Text("Are you sure you want to delete the results?"),
+                    message: Text("This action cannot be undone."),
+                    primaryButton: .destructive(Text("Delete")) {
+                        clear()
+                    },
+                    secondaryButton: .cancel()
+                )
+            }
+        }
+    }
+    
+    func getHeader(for die: Die) -> some View {
+        HStack {
+            Text("Die: \(die.amountOfSides)")
+            Spacer()
+            Button("Clear") {
+                dieToClear = die
+                showingWarning = true
             }
         }
     }
@@ -53,6 +77,15 @@ struct ResultsView: View {
             }
         }
         
+        do {
+            try moc.save()
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
+    func clear() {
+        moc.delete(dieToClear ?? Die())
         do {
             try moc.save()
         } catch {

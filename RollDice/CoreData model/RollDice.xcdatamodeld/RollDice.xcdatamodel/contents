@@ -14,7 +14,7 @@
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="result" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="time" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <relationship name="die" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Die" inverseName="rolls" inverseEntity="Die"/>
+        <relationship name="die" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Die" inverseName="rolls" inverseEntity="Die"/>
     </entity>
     <elements>
         <element name="Die" positionX="-63" positionY="9" width="128" height="59"/>
