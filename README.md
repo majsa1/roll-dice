@@ -8,5 +8,6 @@ https://www.hackingwithswift.com/guide/ios-swiftui/7/3/challenge
 
 
 
-/Users/Thuis/Developer/Swift/Hackingwithswift/RollDice/RollDice.mp4
+https://user-images.githubusercontent.com/75611648/129530965-ce5cacf2-0343-4aff-9dea-38a3334158a0.mp4
+
 
